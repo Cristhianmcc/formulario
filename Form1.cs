@@ -29,6 +29,7 @@ namespace formulario
                 " SslMode = ; ";
             connection = new MySqlConnection(connectionString);
             ListarTodo();
+            limpiarCasillas();
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -49,6 +50,8 @@ namespace formulario
 
         private void dataGridView1_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
+            
+
 
         }
 
@@ -99,6 +102,7 @@ namespace formulario
         {
             crearUsuario();
             ListarTodo();
+            limpiarCasillas();
         }
 
         private void crearUsuario()
@@ -114,7 +118,10 @@ namespace formulario
 
                 connection.Open();
                 cmd.ExecuteNonQuery();
+
+                lbl_mensaje.Text = "";
                 lbl_mensaje.Text += "Registro insertado correctamente";
+                
             }
             catch (Exception ex) {
                 lbl_mensaje.Text += "Error en registro: " + ex.Message;
@@ -136,6 +143,118 @@ namespace formulario
         {
             crearUsuario();
             ListarTodo();
+        }
+
+        private void datagrid_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int indice = e.RowIndex;
+            var fila = datagrid.Rows[indice];
+            string username = fila.Cells[1].Value + "";
+            string password = fila.Cells[2].Value.ToString();
+            string email = fila.Cells[3].Value.ToString();
+
+            id_selected =Convert.ToInt32(fila.Cells[0].Value.ToString());
+
+            txt_username.Text = username;
+            txt_pass.Text = password;
+            txt_email.Text = email;
+
+            btnEliminar.Enabled = true;
+            btn_actualizar.Enabled = true;
+
+            btn_agregar.Enabled = false;
+
+
+        }
+
+
+        public void update()
+        {
+            string query = "UPDATE users SET username=@uno," +
+                "password=@dos,email=@tres" +
+                " WHERE id=@cuatro";
+
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, this.connection);
+                cmd.Parameters.AddWithValue("@uno", txt_username.Text);
+                cmd.Parameters.AddWithValue("@dos", txt_pass.Text);
+                cmd.Parameters.AddWithValue("@tres", txt_email.Text);
+
+                cmd.Parameters.AddWithValue("@cuatro", id_selected);
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+                lbl_mensaje.Text = "";
+                lbl_mensaje.Text += "Registro Actualizado correctamente";
+                
+            }
+            catch (Exception ex)
+            {
+                lbl_mensaje.Text += "Error en registro: " + ex.Message;
+            }
+            finally
+            {
+                connection.Close();
+            }
+        }
+
+        public void delete()
+        {
+            string query = "DELETE from users WHERE id=@id";
+            try
+            {
+                MySqlCommand cmd = new MySqlCommand(query, this.connection);
+
+                cmd.Parameters.AddWithValue("@id", id_selected);
+
+                connection.Open();
+                cmd.ExecuteNonQuery();
+
+                lbl_mensaje.Text = "";
+                lbl_mensaje.Text += "Registro Eliminado Correctamente";
+
+            }
+            catch (Exception ex) {
+                lbl_mensaje.Text += "Error en eliminar: " + ex.Message;
+            }
+            finally { connection.Close(); }
+        }
+
+        private void Form1_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void btn_actualizar_Click(object sender, EventArgs e)
+        {
+            update();
+            ListarTodo();
+            limpiarCasillas();
+        }
+
+        private void btnEliminar_Click(object sender, EventArgs e)
+        {
+            delete();
+            ListarTodo();
+            limpiarCasillas();
+        }
+
+        private void limpiarCasillas()
+        {
+            txt_email.Text = "";
+            txt_pass.Text = "";
+            txt_username.Text = "";
+
+            btnEliminar.Enabled = false;
+            btn_actualizar.Enabled = false;
+
+            btn_agregar.Enabled = true;
+        }
+
+        private void btnCancelar_Click(object sender, EventArgs e)
+        {
+            limpiarCasillas();
         }
     }
 }

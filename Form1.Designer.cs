@@ -31,7 +31,6 @@
             this.btn_conectar = new System.Windows.Forms.Button();
             this.btn_agregar = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -41,26 +40,29 @@
             this.txt_pass = new System.Windows.Forms.TextBox();
             this.datagrid = new System.Windows.Forms.DataGridView();
             this.lbl_mensaje = new System.Windows.Forms.Label();
-            this.btn_calcular = new System.Windows.Forms.Button();
+            this.btn_actualizar = new System.Windows.Forms.Button();
+            this.btnEliminar = new System.Windows.Forms.Button();
+            this.btnCancelar = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.datagrid)).BeginInit();
             this.SuspendLayout();
             // 
             // btn_conectar
             // 
-            this.btn_conectar.Location = new System.Drawing.Point(38, 418);
+            this.btn_conectar.BackColor = System.Drawing.Color.Cyan;
+            this.btn_conectar.Location = new System.Drawing.Point(90, 399);
             this.btn_conectar.Name = "btn_conectar";
-            this.btn_conectar.Size = new System.Drawing.Size(121, 38);
+            this.btn_conectar.Size = new System.Drawing.Size(133, 53);
             this.btn_conectar.TabIndex = 0;
             this.btn_conectar.Text = "CONECTAR";
-            this.btn_conectar.UseVisualStyleBackColor = true;
+            this.btn_conectar.UseVisualStyleBackColor = false;
             this.btn_conectar.Click += new System.EventHandler(this.button1_Click);
             // 
             // btn_agregar
             // 
-            this.btn_agregar.BackColor = System.Drawing.Color.DarkGray;
+            this.btn_agregar.BackColor = System.Drawing.Color.MediumAquamarine;
             this.btn_agregar.Location = new System.Drawing.Point(12, 327);
             this.btn_agregar.Name = "btn_agregar";
-            this.btn_agregar.Size = new System.Drawing.Size(116, 39);
+            this.btn_agregar.Size = new System.Drawing.Size(132, 57);
             this.btn_agregar.TabIndex = 1;
             this.btn_agregar.Text = "AGREGAR";
             this.btn_agregar.UseVisualStyleBackColor = false;
@@ -68,21 +70,13 @@
             // 
             // button3
             // 
+            this.button3.BackColor = System.Drawing.Color.Turquoise;
             this.button3.Location = new System.Drawing.Point(182, 327);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(86, 39);
+            this.button3.Size = new System.Drawing.Size(130, 57);
             this.button3.TabIndex = 2;
             this.button3.Text = "LIMPIAR";
-            this.button3.UseVisualStyleBackColor = true;
-            // 
-            // button4
-            // 
-            this.button4.Location = new System.Drawing.Point(358, 327);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(85, 39);
-            this.button4.TabIndex = 3;
-            this.button4.Text = "SALIR";
-            this.button4.UseVisualStyleBackColor = true;
+            this.button3.UseVisualStyleBackColor = false;
             // 
             // label1
             // 
@@ -144,7 +138,7 @@
             // 
             // datagrid
             // 
-            this.datagrid.BackgroundColor = System.Drawing.SystemColors.ActiveCaption;
+            this.datagrid.BackgroundColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.datagrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.datagrid.Location = new System.Drawing.Point(520, 33);
             this.datagrid.Name = "datagrid";
@@ -152,6 +146,7 @@
             this.datagrid.RowTemplate.Height = 28;
             this.datagrid.Size = new System.Drawing.Size(687, 351);
             this.datagrid.TabIndex = 14;
+            this.datagrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.datagrid_CellClick);
             this.datagrid.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dataGridView1_CellContentClick);
             // 
             // lbl_mensaje
@@ -163,22 +158,45 @@
             this.lbl_mensaje.TabIndex = 15;
             this.lbl_mensaje.Text = "MENSAJE";
             // 
-            // btn_calcular
+            // btn_actualizar
             // 
-            this.btn_calcular.Location = new System.Drawing.Point(293, 418);
-            this.btn_calcular.Name = "btn_calcular";
-            this.btn_calcular.Size = new System.Drawing.Size(121, 38);
-            this.btn_calcular.TabIndex = 16;
-            this.btn_calcular.Text = "CALCULAR";
-            this.btn_calcular.UseVisualStyleBackColor = true;
-            this.btn_calcular.Click += new System.EventHandler(this.btn_calcular_Click);
+            this.btn_actualizar.Location = new System.Drawing.Point(290, 394);
+            this.btn_actualizar.Name = "btn_actualizar";
+            this.btn_actualizar.Size = new System.Drawing.Size(113, 62);
+            this.btn_actualizar.TabIndex = 17;
+            this.btn_actualizar.Text = "Actualizar";
+            this.btn_actualizar.UseVisualStyleBackColor = true;
+            this.btn_actualizar.Click += new System.EventHandler(this.btn_actualizar_Click);
+            // 
+            // btnEliminar
+            // 
+            this.btnEliminar.Location = new System.Drawing.Point(380, 327);
+            this.btnEliminar.Name = "btnEliminar";
+            this.btnEliminar.Size = new System.Drawing.Size(119, 57);
+            this.btnEliminar.TabIndex = 18;
+            this.btnEliminar.Text = "ELIMINAR";
+            this.btnEliminar.UseVisualStyleBackColor = true;
+            this.btnEliminar.Click += new System.EventHandler(this.btnEliminar_Click);
+            // 
+            // btnCancelar
+            // 
+            this.btnCancelar.Location = new System.Drawing.Point(230, 491);
+            this.btnCancelar.Name = "btnCancelar";
+            this.btnCancelar.Size = new System.Drawing.Size(133, 58);
+            this.btnCancelar.TabIndex = 19;
+            this.btnCancelar.Text = "CANCELAR";
+            this.btnCancelar.UseVisualStyleBackColor = true;
+            this.btnCancelar.Click += new System.EventHandler(this.btnCancelar_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
             this.ClientSize = new System.Drawing.Size(1219, 577);
-            this.Controls.Add(this.btn_calcular);
+            this.Controls.Add(this.btnCancelar);
+            this.Controls.Add(this.btnEliminar);
+            this.Controls.Add(this.btn_actualizar);
             this.Controls.Add(this.lbl_mensaje);
             this.Controls.Add(this.datagrid);
             this.Controls.Add(this.txt_pass);
@@ -188,12 +206,12 @@
             this.Controls.Add(this.label3);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.button4);
             this.Controls.Add(this.button3);
             this.Controls.Add(this.btn_agregar);
             this.Controls.Add(this.btn_conectar);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.datagrid)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -205,7 +223,6 @@
         private System.Windows.Forms.Button btn_conectar;
         private System.Windows.Forms.Button btn_agregar;
         private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label3;
@@ -215,7 +232,9 @@
         private System.Windows.Forms.TextBox txt_pass;
         private System.Windows.Forms.DataGridView datagrid;
         private System.Windows.Forms.Label lbl_mensaje;
-        private System.Windows.Forms.Button btn_calcular;
+        private System.Windows.Forms.Button btn_actualizar;
+        private System.Windows.Forms.Button btnEliminar;
+        private System.Windows.Forms.Button btnCancelar;
     }
 }
 
