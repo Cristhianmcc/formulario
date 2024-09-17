@@ -1,4 +1,5 @@
-﻿using MySql.Data.MySqlClient;
+﻿using formulario.entidad;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -15,19 +16,21 @@ namespace formulario
     public partial class Form1 : Form
 
     {
-        MySqlConnection connection;
+        private UserControlador control;
+        //MySqlConnection connection;
 
         private int id_selected = -1;
 
         public Form1()
         {
             InitializeComponent();
-            String connectionString = "Server=localhost;" +
-                "Database= usuario;" +
-                "User ID = root;" +
-                " Password = ;" +
-                " SslMode = ; ";
-            connection = new MySqlConnection(connectionString);
+            /* String connectionString = "Server=localhost;" +
+                 "Database= test_csharp;" +
+                 "User ID = root;" +
+                 " Password = Lurin@2024;" +
+                 " SslMode = ;";
+             connection = new MySqlConnection(connectionString);*/
+            control = new UserControlador();
             ListarTodo();
             limpiarCasillas();
         }
@@ -52,7 +55,8 @@ namespace formulario
         {
             
 
-
+              
+             
         }
 
         private void ListarTodo()
@@ -65,35 +69,45 @@ namespace formulario
             dt.Columns.Add("CORREO");
             
 
-
-            string query = "SELECT * FROM users";
-            MySqlCommand cmd = new MySqlCommand(query, this.connection);
+           
+            //MySqlCommand cmd = new MySqlCommand(query, this.connection);
 
             try
             {
-                connection.Open();
-                MySqlDataReader reader = cmd.ExecuteReader();
-                while (reader.Read())
+                List<EUser> lista = control.GetAll();
+                foreach (EUser user in lista)
                 {
-                    int id = reader.GetInt32("id");
-                    string username = reader.GetString("username");
-                    string password = reader.GetString("password");
-                    string email = reader.GetString("email");
-
-                    dt.Rows.Add(id, username, password, email);
-
-                    
-
+                    dt.Rows.Add(user.Id, user.Username, user.Password, user.Email);
                 }
+                //string query = "SELECT * FROM users";
+                //connection.Open();
+                //MySqlDataReader reader = cmd.ExecuteReader();
+                //while (reader.Read())
+
+                //{
+                //    int id = reader.GetInt32("id");
+                //    string username = reader.GetString("username");
+                //    string password = reader.GetString("password");
+                //    string email = reader.GetString("email");
+
+                //    dt.Rows.Add(id, username, password, email);
+
+
+
+                //}
+
+
+
             }
             catch (Exception ex)
             {
-                lbl_mensaje.Text += "Error en Lista: " + ex.Message;
+                //lbl_mensaje.Text += "Error en Lista: " + ex.Message;
+                lbl_mensaje.Text += "Error en la lista: " + ex.Message;
             }
-            finally
-            {
-                connection.Close();
-            }
+            //finally
+            //{
+            //    connection.Close();
+            //}
 
             datagrid.DataSource = dt;
         }
@@ -107,17 +121,25 @@ namespace formulario
 
         private void crearUsuario()
         {
-            string query = "INSERT INTO users (username,password,email)" +
-                " VALUES (@username,@password,@email)";
+           // string query = "INSERT INTO users (username,password,email)" +
+                //" VALUES (@username,@password,@email)";
             try
             {
-                MySqlCommand cmd = new MySqlCommand(query, this.connection);
-                cmd.Parameters.AddWithValue("@username", txt_username.Text);
-                cmd.Parameters.AddWithValue("@password", txt_pass.Text);
-                cmd.Parameters.AddWithValue("@email", txt_email.Text);
+                EUser user = new EUser();
+                user.Username =txt_username.Text;
+                user.Password =txt_pass.Text;
+                user.Email =txt_email.Text;
 
-                connection.Open();
-                cmd.ExecuteNonQuery();
+                control.Create(user);
+                //MySqlCommand cmd = new MySqlCommand(query, this.connection);
+                //cmd.Parameters.AddWithValue("@username", txt_username.Text);
+                //cmd.Parameters.AddWithValue("@password", txt_pass.Text);
+                //cmd.Parameters.AddWithValue("@email", txt_email.Text);
+
+                //connection.Open();
+                //cmd.ExecuteNonQuery();
+
+                control.Create(user);
 
                 lbl_mensaje.Text = "";
                 lbl_mensaje.Text += "Registro insertado correctamente";
@@ -126,10 +148,7 @@ namespace formulario
             catch (Exception ex) {
                 lbl_mensaje.Text += "Error en registro: " + ex.Message;
             }
-            finally
-            {
-                connection.Close();
-            }
+            
 
             
         }
@@ -170,21 +189,28 @@ namespace formulario
 
         public void update()
         {
-            string query = "UPDATE users SET username=@uno," +
-                "password=@dos,email=@tres" +
-                " WHERE id=@cuatro";
+            //string query = "UPDATE users SET username=@uno," +
+            //    "password=@dos,email=@tres" +
+            //    " WHERE id=@cuatro";
 
             try
             {
-                MySqlCommand cmd = new MySqlCommand(query, this.connection);
-                cmd.Parameters.AddWithValue("@uno", txt_username.Text);
-                cmd.Parameters.AddWithValue("@dos", txt_pass.Text);
-                cmd.Parameters.AddWithValue("@tres", txt_email.Text);
+                EUser user = new EUser();
+                user.Id = id_selected;
+                user.Username = txt_username.Text;
+                user.Password = txt_pass.Text;
+                user.Email= txt_email.Text;
+                //MySqlCommand cmd = new MySqlCommand(query, this.connection);
+                //cmd.Parameters.AddWithValue("@uno", txt_username.Text);
+                //cmd.Parameters.AddWithValue("@dos", txt_pass.Text);
+                //cmd.Parameters.AddWithValue("@tres", txt_email.Text);
 
-                cmd.Parameters.AddWithValue("@cuatro", id_selected);
+                //cmd.Parameters.AddWithValue("@cuatro", id_selected);
 
-                connection.Open();
-                cmd.ExecuteNonQuery();
+                //connection.Open();
+                //cmd.ExecuteNonQuery();
+
+                control.Update(user);
                 lbl_mensaje.Text = "";
                 lbl_mensaje.Text += "Registro Actualizado correctamente";
                 
@@ -193,32 +219,36 @@ namespace formulario
             {
                 lbl_mensaje.Text += "Error en registro: " + ex.Message;
             }
-            finally
-            {
-                connection.Close();
-            }
+            //finally
+            //{
+            //    connection.Close();
+            //}
         }
 
         public void delete()
         {
-            string query = "DELETE from users WHERE id=@id";
+            //string query = "DELETE from users WHERE id=@id";
             try
             {
-                MySqlCommand cmd = new MySqlCommand(query, this.connection);
+                EUser user = new EUser();
+                user.Id = id_selected;
 
-                cmd.Parameters.AddWithValue("@id", id_selected);
+                control.Delete(user);
+                //MySqlCommand cmd = new MySqlCommand(query, this.connection);
 
-                connection.Open();
-                cmd.ExecuteNonQuery();
+                //cmd.Parameters.AddWithValue("@id", id_selected);
 
-                lbl_mensaje.Text = "";
+                //connection.Open();
+                //cmd.ExecuteNonQuery();
+
+                //lbl_mensaje.Text = "";
                 lbl_mensaje.Text += "Registro Eliminado Correctamente";
 
             }
             catch (Exception ex) {
                 lbl_mensaje.Text += "Error en eliminar: " + ex.Message;
             }
-            finally { connection.Close(); }
+            //finally { connection.Close(); }
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -255,6 +285,16 @@ namespace formulario
         private void btnCancelar_Click(object sender, EventArgs e)
         {
             limpiarCasillas();
+        }
+
+        private void practica()
+        {
+            EUser entidad = new EUser(2, "aa","bb","cc");
+
+            entidad.Id = 2;
+
+            EUser entidad1 = new EUser();
+
         }
     }
 }
