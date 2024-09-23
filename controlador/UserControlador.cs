@@ -30,7 +30,20 @@ namespace formulario
             return model.readAll();
         }
     public int Update(EUser user)
-        {
+
+        {   
+            EUser user2 = model.findById(user.Id);
+            if (user.Password != "")
+            {
+                user.Password = hashPassword(user.Password);
+
+            }
+            else
+            {
+                user.Password = user2.Password;
+            }
+
+            
             return model.update(user);
 
         }
@@ -47,27 +60,42 @@ namespace formulario
             return hash;
         }
 
-    public void login(string username, string password)
+    public bool login(string username, string password)
         {
             EUser user = model.findByUsername(username);
-            if (user.Username !=null)
-            {
-                if (BCrypt.Net.BCrypt.Verify(password, user.Password))
-                {
-                    MessageBox.Show("Bienvenido");
-                }
-                else
-                {
-                MessageBox.Show("Contraseña incorrecta");
-                }
-                
 
+
+            if (user == null)
+            {
+                return false;
             }
- 
-                else
-                {
-                    MessageBox.Show("Contraseña incorrecta");
-                }
+            if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+            //if (user.Username !=null)
+            //{
+            //    if (BCrypt.Net.BCrypt.Verify(password, user.Password))
+            //    {
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //   return false;
+            //    }
+
+
+            //}
+
+            //    else
+            //    {
+            //    return false;
+
+            //}
         }
     }
    

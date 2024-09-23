@@ -175,7 +175,7 @@ namespace formulario
             id_selected =Convert.ToInt32(fila.Cells[0].Value.ToString());
 
             txt_username.Text = username;
-            txt_pass.Text = password;
+           // txt_pass.Text = password;
             txt_email.Text = email;
 
             btnEliminar.Enabled = true;
@@ -295,6 +295,16 @@ namespace formulario
 
             EUser entidad1 = new EUser();
 
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            
+        }
+
+        private void pictureBox1_Click(object sender, EventArgs e)
+        {
+            Application.Exit();
         }
     }
 }

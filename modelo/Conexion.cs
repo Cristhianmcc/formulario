@@ -14,7 +14,7 @@ namespace formulario.modelo
             private string server = "localhost";
             private string db_name = "test_csharp";
             private string db_user = "root";
-            private string db_pass = "Lurin@2024";
+            private string db_pass = "root";
 
         //atributo de mysql
 

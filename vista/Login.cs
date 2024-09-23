@@ -27,9 +27,24 @@ namespace formulario.vista
 
                 UserControlador controlador = new UserControlador();
                 controlador.login(username, password);
-                
 
-            }catch (Exception ex)
+                if (controlador.login(username,password))
+                {
+                    MessageBox.Show("Bienvenido");
+
+                    Form1 formulario = new Form1();
+                    formulario.Show();
+                    this.Hide
+                        ();
+                }
+                else
+                {
+                    MessageBox.Show("Usuario o contraseña incorrecta");
+                }   
+
+
+            }
+            catch (Exception ex)
             {
                 MessageBox.Show("Error: " + ex.Message);
 
