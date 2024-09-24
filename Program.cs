@@ -16,7 +16,7 @@ namespace formulario
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new vista.Login());
+            Application.Run(new vista.menuPrincipal());
         }
     }
 }

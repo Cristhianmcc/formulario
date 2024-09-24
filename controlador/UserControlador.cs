@@ -37,6 +37,7 @@ namespace formulario
             {
                 user.Password = hashPassword(user.Password);
 
+
             }
             else
             {
